@@ -1,0 +1,19 @@
+data:
+  init_args:
+    max_selfies_len: null
+    max_mol_mass: null
+    remove_test_datasets: false
+    storage:
+      class_path: seismiq.prediction.data.storage.InMemoryDataStorage
+      init_args:
+        datafile: dev/all_casmi_simulated.pkl
+    preparer:
+      class_path: seismiq.prediction.data.preparation.TestDatasetsPreparer
+      init_args:
+        dataset_names: [ casmi_2016 , casmi_2017 , casmi_2022 ]
+        base_preparer:
+          class_path: seismiq.prediction.data.preparation.SyntheticDataPreparer
+          init_args:
+            min_peaks: 4
+            n_workers: 128
+            job_size: 4

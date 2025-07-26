@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.16.1
+    hooks:
+      - id: gitleaks
+  - repo: local
+    hooks:
+      - id: ruff_lint
+        name: Lint
+        language: system
+        entry: ruff check
+        args: [ --fix ]
+        pass_filenames: true
+        types: [python]
+      - id: ruff_fmt
+        name: Format
+        language: system
+        entry: ruff format
+        pass_filenames: true
+        types: [python]

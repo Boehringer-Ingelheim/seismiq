@@ -1,0 +1,17 @@
+# to finetune, load the pretrained config, load the finetuning config, and load the dataset config
+# python bases/seismiq/model/main.py fit \
+#     --config configs/pretrained.yaml \
+#     --config configs/finetuned.yaml \
+#     --config configs/data_simulated.yaml  (or another dataset config)
+
+# override ckpt_path from command line if necessary
+# make sure the checkpoint is compatible with the specified pretrained configuration
+ckpt_path: dev/checkpoints/seismiq_pretrained.ckpt
+trainer:
+  val_check_interval: null 
+  strategy: ddp_find_unused_parameters_true
+model:
+  init_args:
+    freeze_transformer: true
+    sample_every_train_batches: 300
+    sample_every_val_batches: 20
