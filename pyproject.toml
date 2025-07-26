@@ -3,7 +3,7 @@ name = "SEISMiQ"
 version = "0.1.0"
 description = ""
 authors = ["Emilio Dorigatti <emilio.dorigatti@boehringer-ingelheim.com>"]
-license = "Proprietary"
+license = "CC-BY 4.0"
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -90,7 +90,7 @@ select = [
     # flake8-simplify
     "SIM",
     # isort
-    "I", 
+    "I",
 ]
 ignore = [
     "E722",  # do not use bare `except`
