@@ -36,7 +36,7 @@ def load_checkpoint(
 
     if data_hparams_override is None:
         data_hparams_override = {}
-    if 'tokenizer_override' not in data_hparams_override:
+    if "tokenizer_override" not in data_hparams_override:
         ov = config.SEISMIQ_TOKENIZER_OVERRIDE(None)
         if ov:
             data_hparams_override["tokenizer_override"] = ov

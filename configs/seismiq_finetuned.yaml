@@ -8,7 +8,7 @@
 # make sure the checkpoint is compatible with the specified pretrained configuration
 ckpt_path: dev/checkpoints/seismiq_pretrained.ckpt
 trainer:
-  val_check_interval: null 
+  val_check_interval: null
   strategy: ddp_find_unused_parameters_true
 model:
   init_args:

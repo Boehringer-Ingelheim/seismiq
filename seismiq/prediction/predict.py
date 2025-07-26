@@ -74,7 +74,7 @@ def eval_model_on_challenges(
         if best >= 0.0:
             logger.debug(f'Valid predictions: {len(preds)} - Best tanimoto: {preds["tanimoto"].max()}')
         else:
-            logger.debug(f'Valid predictions: {len(preds)}')
+            logger.debug(f"Valid predictions: {len(preds)}")
 
         dfs.append(preds)
 
