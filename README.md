@@ -2,6 +2,9 @@
 
 A machine learning model elucidating molecular structures from tandem mass spectrometry data.
 
+This is the official code release for [our paper](https://pubs.rsc.org/en/Content/ArticleLanding/2025/DD/D5DD00115C):
+
+E. Dorigatti, J. Groß, J. Kühlborn, R. Möckel, F. Maier and J. Keupp, Enhancing automated drug substance impurity structure elucidation from tandem mass spectra through transfer learning and domain knowledge, Digital Discovery, 2025, DOI: 10.1039/D5DD00115C.
 
 ## Installation
 
@@ -218,17 +221,17 @@ The plots will be saved in `resources/results/figures`.
 
 ## Impurity simulation
 
-Exemplary scripts and files are provided to demonstrate how to extract reaction templates from 
+Exemplary scripts and files are provided to demonstrate how to extract reaction templates from
 a given reaction smiles string and apply templates for forward prediction on reactants, as it
 was done for the results in the manuscript.
- 
+
 By subjecting a reaction string to the code, a template can be extracted, for example:
 
 ```bash
 python seismiq/impurity_simulation/extract_template.py \
   resources/examples/reaction_smiles.txt ./templates.txt
 ```
- 
+
 By providing reactants in SMILES notation and reaction templates, possible impurity structures
 can be generated, for example:
 
@@ -236,7 +239,7 @@ can be generated, for example:
 python seismiq/impurity_simulation/template_impurity_prediction.py \
   resources/examples/reaction_smiles.txt resources/examples/reaction_templates.txt ./impurities.py
 ```
- 
+
 ## Citation
 
 If you use our model or dataset, we would be grateful if you acknowledged our publication:
