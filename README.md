@@ -212,6 +212,10 @@ a folder with the checkpoints.
 
 Our model's predictions are provided on Zenodo, and the code to download them and generate the
 result figures in the paper is in the Jupyter notebook `notebooks/figures.ipynb`.
+In the same folder, the notebook `confidence_intervals.ipynb` computes the confidence intervals
+reported in the supplementary information S5, and `sirius_ranking.ipynb` compares ranking by
+perplexity and ranking by CSI:FingerID score, producing figure S2 in the supplementary
+information.
 
 ## Impurity simulation
 
