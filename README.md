@@ -213,12 +213,6 @@ a folder with the checkpoints.
 Our model's predictions are provided on Zenodo, and the code to download them and generate the
 result figures in the paper is in the Jupyter notebook `notebooks/figures.ipynb`.
 
-```bash
-python scripts/make_figures.py
-```
-
-The plots will be saved in `resources/results/figures`.
-
 ## Impurity simulation
 
 Exemplary scripts and files are provided to demonstrate how to extract reaction templates from
