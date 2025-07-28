@@ -3,7 +3,7 @@ import collections
 from lightning.fabric.utilities.seed import seed_everything
 from lightning.pytorch import Trainer
 
-from seismiq.prediction.data.preparation import SeismiqDataPreparer
+from seismiq.prediction.data.preparation import CsvDataPreparer
 from seismiq.prediction.data.storage import InMemoryDataStorage
 from seismiq.prediction.llm.data_module import EncoderDecoderLlmDataModule
 from seismiq.prediction.llm.training_module import EncoderDecoderLlmTrainingModule
@@ -35,18 +35,11 @@ def test_train(tmp_path_factory):
             datafile=str(working_folder / "dataset.pkl"),
         ),
         peaks_nfreq=64,
-        preparer=SeismiqDataPreparer(
-            sample_limit=1000,
-            min_atoms=3,
-            min_peaks=3,
-            use_experimental_spectra=True,
-            use_synthetic_spectra=True,
-            only_molecules_with_experimental_spectra=False,
-            only_samples_with_spectrum=True,
-            num_workers=1,
+        preparer=CsvDataPreparer(
+            csv_file="resources/examples/training_data_20.csv",
         ),
         force_recreate=False,
-        subsample=20,
+        subsample=10,
         subsample_mols=50,
         smiles_augment=True,
         smiles_augment_prob=0.5,
@@ -70,7 +63,7 @@ def test_train(tmp_path_factory):
 
     model.log = log_override  # type: ignore
 
-    trainer = Trainer(accelerator="cpu", max_epochs=2, default_root_dir=str(working_folder))
+    trainer = Trainer(accelerator="cpu", max_epochs=4, default_root_dir=str(working_folder))
     trainer.fit(model=model, datamodule=data)
 
     print(f'loss train 0 {logged_losses["loss/train"][0]:.3f}')
