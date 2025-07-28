@@ -1,0 +1,30 @@
+This repository contains the source code for the publication:
+
+**Enhancing automated drug substance impurity structure elucidation from tandem mass spectra through transfer learning and domain knowledge.**
+
+Authors: Emilio Dorigatti, Jonathan Groß, Jonas Kühlborn, Robert Möckel, Frank Maier, and Julian Keupp  
+Published in: Digital Discovery, 2025  
+DOI: 10.1039/D5DD00115C  
+GitHub Repository: https://github.com/Boehringer-Ingelheim/seismiq  
+Supplementary Material: https://doi.org/10.5281/zenodo.15790300  
+
+If you use this code in your work, please cite the associated paper:
+
+E. Dorigatti, J. Groß, J. Kühlborn, R. Möckel, F. Maier and J. Keupp,  
+Enhancing automated drug substance impurity structure elucidation from tandem mass spectra through transfer learning and domain knowledge,  
+**Digital Discovery**, 2025, DOI: 10.1039/D5DD00115C.
+
+For academic purposes, you can use the following BibTeX entry:
+
+```bibtex
+@article{Dorigatti_2025_seismiq,
+  title = {Enhancing automated drug substance impurity structure elucidation from tandem mass spectra through transfer learning and domain knowledge.},
+  ISSN = {2635-098X},
+  url = {http://dx.doi.org/10.1039/D5DD00115C},
+  DOI = {10.1039/d5dd00115c},
+  journal = {Digital Discovery},
+  publisher = {Royal Society of Chemistry (RSC)},
+  author = {Dorigatti,  Emilio and Groß,  Jonathan and K\"{u}hlborn,  Jonas and M\"{o}ckel,  Robert and Maier,  Frank and Keupp,  Julian},
+  year = {2025}
+}
+```
