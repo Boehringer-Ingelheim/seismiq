@@ -9,7 +9,7 @@ import torch
 from loguru import logger
 from rdkit import Chem, DataStructs
 
-from seismiq.prediction.llm.data_module import DecoderOnlyDataSample, EncoderDecoderLlmDataModule
+from seismiq.prediction.llm.data_module import EncoderDecoderLlmDataModule, ModelSample
 from seismiq.prediction.llm.training_module import EncoderDecoderLlmTrainingModule
 from seismiq.utils import rdkit_wrapper as wrdkit
 from seismiq.utils.mol_utils import get_mol_formula
@@ -17,7 +17,7 @@ from seismiq.utils.mol_utils import get_mol_formula
 
 @dataclasses.dataclass
 class GeneratedSample:
-    wrapped_sample: DecoderOnlyDataSample
+    wrapped_sample: ModelSample
     logp: float
     prompt_logp: float
     perplexity: float
@@ -98,7 +98,7 @@ def sample_predictions_beam_search_with_progress(
             Defaults to False.
 
     Yields:
-        Iterator[dict[str, Any], list[GeneratedSample[DecoderOnlyDataSample]]]: Each sampling step yields
+        Iterator[dict[str, Any], list[GeneratedSample[ModelSample]]]: Each sampling step yields
             a dictionary with information on the sampling process. The very last yielded item contains
             the final model predictions.
     """
@@ -125,7 +125,7 @@ def sample_predictions_beam_search_with_progress(
 
     all_samples = [
         GeneratedSample(
-            wrapped_sample=DecoderOnlyDataSample(
+            wrapped_sample=ModelSample(
                 idx=-1,
                 smiles=smiles_prefix,
                 tokens=initial_tokens,

@@ -23,7 +23,7 @@ from torch.nn import (
 from torch.utils.data import DataLoader
 
 from seismiq.prediction.layers import Mlp, PositionalEncoder
-from seismiq.prediction.llm.data_module import DecoderOnlyDataSample, EncoderDecoderDataBatch
+from seismiq.prediction.llm.data_module import EncoderDecoderDataBatch, ModelSample
 from seismiq.utils import rdkit_wrapper as wrdkit
 
 
@@ -247,7 +247,7 @@ class EncoderDecoderLlmTrainingModule(LightningModule):
         return metrics
 
     def _continuous_validation_step(self) -> None:
-        def get_dataloader() -> DataLoader[DecoderOnlyDataSample]:
+        def get_dataloader() -> DataLoader[ModelSample]:
             if hasattr(self.trainer, "datamodule"):
                 return self.trainer.datamodule.val_dataloader()  # type: ignore
             else:

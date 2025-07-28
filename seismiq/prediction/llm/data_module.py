@@ -28,7 +28,7 @@ class LlmDatasetInfo:
 
 
 @dataclasses.dataclass
-class DecoderOnlyDataSample:
+class ModelSample:
     idx: int
     smiles: str
     tokens: Tensor
@@ -89,7 +89,7 @@ class EncoderDecoderDataBatch:
         return self
 
 
-class EncoderDecoderLlmDataset(Dataset[DecoderOnlyDataSample]):
+class EncoderDecoderLlmDataset(Dataset[ModelSample]):
     def __init__(
         self,
         info: LlmDatasetInfo | None,
@@ -128,13 +128,13 @@ class EncoderDecoderLlmDataset(Dataset[DecoderOnlyDataSample]):
     def __len__(self) -> int:
         return len(self.indices)
 
-    def __getitem__(self, idx: int | Sequence[int]) -> DecoderOnlyDataSample | list[DecoderOnlyDataSample]:  # type: ignore
+    def __getitem__(self, idx: int | Sequence[int]) -> ModelSample | list[ModelSample]:  # type: ignore
         if isinstance(idx, int):
             return self._load_one(idx)
         else:
             return [self._load_one(i) for i in idx]
 
-    def _load_one(self, idx: int) -> DecoderOnlyDataSample:
+    def _load_one(self, idx: int) -> ModelSample:
         assert self.info is not None
         datum = self.storage.load_sample(self.indices[idx])
 
@@ -152,7 +152,7 @@ class EncoderDecoderLlmDataset(Dataset[DecoderOnlyDataSample]):
         tokens = torch.tensor(self.dencoder.encode(sm), dtype=torch.long)
         remaining = self.compute_remaining_atoms(mol_atoms, tokens, validate=True)
 
-        return DecoderOnlyDataSample(
+        return ModelSample(
             smiles=sm,
             tokens=tokens,
             remaining_atoms=remaining,
@@ -261,7 +261,7 @@ class EncoderDecoderLlmDataset(Dataset[DecoderOnlyDataSample]):
 
         return enc_mz
 
-    def collate(self, samples: list[DecoderOnlyDataSample]) -> EncoderDecoderDataBatch:
+    def collate(self, samples: list[ModelSample]) -> EncoderDecoderDataBatch:
         if not isinstance(samples, list):
             samples = [samples]
 
@@ -506,22 +506,22 @@ class EncoderDecoderLlmDataModule(LightningDataModule):
 
         return train_mols, train_idx, val_mols, val_idx
 
-    def train_dataloader(self) -> DataLoader[DecoderOnlyDataSample]:
+    def train_dataloader(self) -> DataLoader[ModelSample]:
         sam = self._get_sampler(self.train_dset, shuffle=True)
 
         return DataLoader(
-            cast(Dataset[DecoderOnlyDataSample], self.train_dset),
+            cast(Dataset[ModelSample], self.train_dset),
             num_workers=self.num_workers,
             collate_fn=self.train_dset.collate,
             batch_size=None,
             sampler=sam,
         )
 
-    def val_dataloader(self) -> DataLoader[DecoderOnlyDataSample]:
+    def val_dataloader(self) -> DataLoader[ModelSample]:
         sam = self._get_sampler(self.val_dset, shuffle=False)
 
         return DataLoader(
-            cast(Dataset[DecoderOnlyDataSample], self.val_dset),
+            cast(Dataset[ModelSample], self.val_dset),
             num_workers=self.num_workers,
             collate_fn=self.val_dset.collate,
             batch_size=None,
