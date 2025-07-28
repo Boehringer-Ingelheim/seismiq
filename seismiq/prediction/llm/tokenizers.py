@@ -92,41 +92,45 @@ class SmilesAtomTokenizer:
     def decode(self, tokens: list[int], start_end_truncation: bool = True) -> str:
         return self.detokenize(self.decode_tokens(tokens, start_end_truncation))
 
-    @lru_cache
     def token_to_atom(self, token: int) -> tuple[str, int] | None:
         at = self.id_to_token.get(token)
-        if not at:
-            return None
-
-        if at[0] == "[":
-            assert at[-1] == "]"
-            at = at[1:-1]
-
-            # remove charge
-            if at[-1].isdigit() or (at[-1] == "+" or at[-1] == "-"):  # e.g., "Co-3"
-                at = at[:-1]
-
-            # remove explicit Hs
-            if at[-1] == "H":  # e.g., nH
-                at = at[:-1]
-            elif at[-1].isdigit():  # e.g., CH2
-                assert at[-2] == "H"
-                at = at[:-2]
-
-        if not at:
-            # this happens with '[H]' which we do not count
-            return None
-
-        # lower case are aromatic atoms
-        if at[0].islower():
-            at = at.capitalize()  # e.g., na -> Na
-
-        if at and all(c.isalpha() for c in at):
-            pt = Chem.GetPeriodicTable()  # type: ignore
-            an = pt.GetAtomicNumber(at)
-            return at, an
+        if at:
+            return _token_str_to_atom(at)
         else:
             return None
+
+
+@lru_cache
+def _token_str_to_atom(at: str) -> tuple[str, int] | None:
+    if at[0] == "[":
+        assert at[-1] == "]"
+        at = at[1:-1]
+
+        # remove charge
+        if at[-1].isdigit() or (at[-1] == "+" or at[-1] == "-"):  # e.g., "Co-3"
+            at = at[:-1]
+
+        # remove explicit Hs
+        if at[-1] == "H":  # e.g., nH
+            at = at[:-1]
+        elif at[-1].isdigit():  # e.g., CH2
+            assert at[-2] == "H"
+            at = at[:-2]
+
+    if not at:
+        # this happens with '[H]' which we do not count
+        return None
+
+    # lower case are aromatic atoms
+    if at[0].islower():
+        at = at.capitalize()  # e.g., na -> Na
+
+    if at and all(c.isalpha() for c in at):
+        pt = Chem.GetPeriodicTable()  # type: ignore
+        an = pt.GetAtomicNumber(at)
+        return at, an
+    else:
+        return None
 
 
 class TokenDencoder(abc.ABC):
