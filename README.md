@@ -68,7 +68,7 @@ python seismiq/prediction/predict.py \
 The input file should contain a JSON list of challenges including, at minimum, the spectrum and
 sum formula, for example:
 
-```json
+```javascript
 [
   {
     "sum_formula": "C7H10N2",
