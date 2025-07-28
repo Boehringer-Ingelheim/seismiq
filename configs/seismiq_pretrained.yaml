@@ -144,7 +144,6 @@ model:
         end_factor: 1.0
         total_iters: 1000
         last_epoch: -1
-        verbose: false
     use_sample_weights: true
 data:
   class_path: seismiq.prediction.llm.data_module.EncoderDecoderLlmDataModule
