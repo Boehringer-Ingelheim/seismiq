@@ -137,5 +137,4 @@ dmypy.json
 # project stuff
 *.out
 development/
-resources/
 dev/
