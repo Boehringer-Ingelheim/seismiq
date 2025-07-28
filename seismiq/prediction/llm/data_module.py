@@ -39,6 +39,13 @@ class DecoderOnlyDataSample:
     is_experimental: bool
 
 
+torch.serialization.add_safe_globals(
+    [
+        LlmDatasetInfo,
+    ]
+)
+
+
 class PeakMassEncoder:
     def __init__(self, dim: int, base: float = 3.0, log_freq_min: float = -5, log_freq_max: float = 7) -> None:
         self.dim = dim

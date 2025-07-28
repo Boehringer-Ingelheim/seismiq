@@ -1,6 +1,7 @@
 import dataclasses
 from typing import TypeVar
 
+import torch
 from rdkit import Chem
 
 
@@ -19,3 +20,11 @@ class SeismiqSample:
 
 TSample = TypeVar("TSample")
 TInfo = TypeVar("TInfo")
+
+
+torch.serialization.add_safe_globals(
+    [
+        Chem.Mol,
+        SeismiqSample,
+    ]
+)

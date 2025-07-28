@@ -3,6 +3,7 @@ import re
 from collections.abc import Iterable
 from functools import lru_cache
 
+import torch
 from rdkit import Chem
 from rdkit.Chem import rdchem  # type: ignore
 from torch import Tensor
@@ -157,3 +158,10 @@ class SmilesDencoder(TokenDencoder):
                 return None
         else:
             return sm
+
+
+torch.serialization.add_safe_globals(
+    [
+        SmilesAtomTokenizer,
+    ]
+)
